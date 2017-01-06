@@ -3,13 +3,11 @@ package com.altitudeengineering.replinteractiveinterpreter;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Interpreter {
-	
+public class Interpreter {	
 	private final ExpressionEvaluator evaluator;
 	Scanner scanner;
 	public Interpreter() { this.evaluator = new ExpressionEvaluator(new HashMap<>()); }
-	public Double input(String expression) { return expression.trim().isEmpty() ? null : this.evaluator.evaluate(new InputParser(expression).parse()); }
-	
+	public Double input(String expression) { return expression.trim().isEmpty() ? null : this.evaluator.evaluate(new InputParser(expression).parse()); }	
 	public static void main(String[] args) {
 		Interpreter i = new Interpreter();
 		i.scanner = new Scanner(System.in);
@@ -25,5 +23,4 @@ public class Interpreter {
 		i.input("x = (z + 5) * 2");
 		System.out.print(i.input("x"));
 	}
-	
 }
