@@ -20,8 +20,9 @@ public class Interpreter {
 			if(codeLine.equals(printCmd)) {
 				Set<String> vars = i.evaluator.variables.keySet();
 				for(String v : vars) {
-					System.out.println(String.format("%s = %s", v, i.input(v)));
+					System.out.print(String.format("%s = %s", v, i.input(v)) + " ");
 				}
+				System.out.println();
 				continue;
 			}
 			i.input(codeLine);
