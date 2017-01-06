@@ -3,7 +3,7 @@ package com.altitudeengineering.replinteractiveinterpreter;
 import java.util.Map;
 
 public class ExpressionEvaluator {
-	private final Map<String, Double> variables;
+	protected final Map<String, Double> variables;
 	ExpressionEvaluator(Map<String, Double> vars) { this.variables = vars; }
 	public double evaluate(AbstractSyntaxTree expr) { return expr instanceof BinOpNode ? evaluate((BinOpNode)expr) : expr instanceof NumberNode ? ((NumberNode)expr).number : evaluate((IdentifierNode)expr); }
 	private double evaluate(BinOpNode binOpNode) {

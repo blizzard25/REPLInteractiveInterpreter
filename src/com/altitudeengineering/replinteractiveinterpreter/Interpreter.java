@@ -2,6 +2,7 @@ package com.altitudeengineering.replinteractiveinterpreter;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Interpreter {	
 	private final ExpressionEvaluator evaluator;
@@ -10,17 +11,21 @@ public class Interpreter {
 	public Double input(String expression) { return expression.trim().isEmpty() ? null : this.evaluator.evaluate(new InputParser(expression).parse()); }	
 	public static void main(String[] args) {
 		Interpreter i = new Interpreter();
-		i.scanner = new Scanner(System.in);
-		System.out.println("Enter your code below, each line should be followed by a semi-colon. In a new line type END to execute.");
+		i.scanner = new Scanner(System.in).useDelimiter("\\n");
+		System.out.println("Enter your code below.");
+		String printCmd = "Console.printAllVars";
 		while(true) {
-			String scIn = i.scanner.next();
-			String test = scIn;
-			System.out.println(test);
-			break;
+			String codeLine = i.scanner.next();
+			if(codeLine.equals("END")) break;
+			if(codeLine.equals(printCmd)) {
+				Set<String> vars = i.evaluator.variables.keySet();
+				for(String v : vars) {
+					System.out.println(String.format("%s = %s", v, i.input(v)));
+				}
+				continue;
+			}
+			i.input(codeLine);
 		}
-		i.input("y = 8");
-		i.input("z = y + 2");
-		i.input("x = (z + 5) * 2");
-		System.out.print(i.input("x"));
+		i.scanner.close();
 	}
 }
