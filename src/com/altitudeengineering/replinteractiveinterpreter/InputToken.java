@@ -9,6 +9,7 @@ public class InputToken {
 	static final InputToken DIVIDE = new InputToken(TokenType.TOKEN_DIVIDE);
 	static final InputToken MOD = new InputToken(TokenType.TOKEN_MOD);
 	static final InputToken ASSIGN = new InputToken(TokenType.TOKEN_ASSIGN);
+	static final InputToken FUNC = new InputToken(TokenType.TOKEN_FUNCTION);
 	static final InputToken END = new InputToken(TokenType.END_OF_FUNCTION);	
 	final TokenType type;
 	final String value;

@@ -8,5 +8,6 @@ public enum TreeNodeType {
 	NODE_MOD, 
 	NODE_IDENTIFIER, 
 	NODE_NUMBER, 
-	NODE_ASSIGN
+	NODE_ASSIGN,
+	NODE_FUNCTION
 }

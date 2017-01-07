@@ -5,24 +5,19 @@ import java.util.Arrays;
 public class InputTokenizer {
 	private final char[] source;
 	private int pos = 0;
-
 	private InputToken currentToken = null;
-
 	public InputTokenizer(String src) {
 		source = src.toCharArray();
 	}
-
 	public InputToken getToken() {
 		currentToken = currentToken == null ? nextToken() : currentToken;
 		return currentToken;
 	}
-
 	public InputToken consume() {
 		InputToken result = getToken();
 		currentToken = null;
 		return result;
 	}
-
 	private InputToken nextToken() {
 		consumeWhitespace();
 		if (pos == source.length) {
@@ -38,12 +33,18 @@ public class InputTokenizer {
 			case '*': pos += 1; return InputToken.MULT;
 			case '/': pos += 1; return InputToken.DIVIDE;
 			case '%': pos += 1; return InputToken.MOD;
-			case '=': pos += 1; return InputToken.ASSIGN;
+			case '=': 
+				pos += 1;
+				if(source[pos] == '>') {
+					pos += 1;
+					return InputToken.FUNC;
+				}
+				return InputToken.ASSIGN;
 			default:
 				char c = source[pos];
-				if (isNumeric(c)) return nextNumber();
-				if (identifierStart(c)) return nextVariable();
-				throw new IllegalArgumentException(String.format("Unknown char " + c + " at " + pos));
+				if(isNumeric(c)) return nextNumber();
+				if(identifierStart(c)) return nextVariable();
+				throw new IllegalArgumentException("Unknown char " + c + " at " + pos);
 		}
 	}
 	private InputToken nextNumber() {
@@ -59,7 +60,7 @@ public class InputTokenizer {
 		return new InputToken(type, new String(Arrays.copyOfRange(source, numberStart, pos)));
 	}
 	private void acceptDigits() {
-		while (pos < source.length && isNumeric(source[pos])) pos += 1;
+		while(pos < source.length && isNumeric(source[pos])) pos += 1;
 	}
 	private InputToken nextVariable() {
 		final int varStart = pos;

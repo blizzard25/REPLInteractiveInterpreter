@@ -1,9 +1,13 @@
 package com.altitudeengineering.replinteractiveinterpreter;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public class InputParser {
-	private final InputTokenizer tokenizer;
-	InputParser(InputTokenizer tokenizer) { this.tokenizer = tokenizer; }
-	InputParser(String source) { this.tokenizer = new InputTokenizer(source); }
+	private InputTokenizer tokenizer;
+	private String exp;
+	InputParser(InputTokenizer tokenizer) { this.exp = ""; this.tokenizer = tokenizer; }
+	InputParser(String source) { this.exp = source; this.tokenizer = new InputTokenizer(source); }
 	AbstractSyntaxTree parse() {
 		AbstractSyntaxTree body = addOrSubtractExpression();
 		assertAndConsume(TokenType.END_OF_FUNCTION);
@@ -11,7 +15,7 @@ public class InputParser {
 	}
 	private InputToken assertAndConsume(TokenType tokenType) {
 		InputToken next = tokenizer.getToken();
-		if (next.type != tokenType) throw new IllegalStateException(String.format("Expected : " + tokenType + "\nFound : " + next.type));
+		if(next.type != tokenType) throw new IllegalStateException("Expected : " + tokenType + "\nFound : " + next.type);
 		return tokenizer.consume();
 	}
 	private TokenType getTokenType() { return tokenizer.getToken().type; }
